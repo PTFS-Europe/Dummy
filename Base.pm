@@ -42,6 +42,7 @@ following methods:
 - update_status -> ILL module update hook: custom actions on status update
 - cancel        -> request an already 'confirm'ed ILL order be cancelled
 - status        -> request the current status of a confirmed ILL order
+- status_graph  -> return a hashref of additional statuses
 
 Each of the above methods will receive the following parameter from
 Illrequest.pm:
@@ -145,6 +146,14 @@ sub _data_store {
         push @entries, $v;
     }
     return \@entries;
+}
+
+=head3 status_graph
+
+=cut
+
+sub status_graph {
+    return {};
 }
 
 =head3 create
