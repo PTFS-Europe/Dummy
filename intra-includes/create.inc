@@ -10,31 +10,45 @@
 
 [% IF whole.stage == "search_form" %]
 <h2>Search a dummy request</h2>
-<form method="POST" action="/cgi-bin/koha/ill/ill-requests.pl">
+<form class="validated" method="post" action="/cgi-bin/koha/ill/ill-requests.pl">
+  <input type="hidden" name="stage" value="[% whole.stage %]"/>
+  <input type="hidden" name="method" value="[% whole.method %]"/>
+  <input type="hidden" name="op" value="[% whole.method %]"/>
+  <fieldset class="rows">
+    <ol>
+      <li>
+        <label class="required" for="search">Search string: </label>
+        <input class="required" required="required" type="text" name="search" value="" />
+        <span class="required">Required</span>
+      </li>
+      <li>
+        <label class="required" for="borrowernumber">Borrower number: </label>
+        <input class="required" required="required" type="text" name="borrowernumber" value="" />
+        <span class="required">Required</span>
+      </li>
+      <li>
+        <label class="required" for="branchcode">Pickup branch: </label>
+        <select class="required" required="required" id="branchcode" name="branchcode">
+        [% FOREACH branch IN branches %]
+        <option value="[% branch.branchcode %]">
+            [% branch.branchname %]
+        </option>
+        [% END %]
+        </select>
+        <span class="required">Required</span>
+      </li>
+      <li>
+        <label class="required" for="medium">Request type: </label>
+        <select class="required" required="required" id="medium" name="medium">
+        [% FOREACH medium IN media %]
+        <option value="[% medium %]">[% medium %]</option>
+        [% END %]
+        </select>
+        <span class="required">Required</span>
+      </li>
+    </ol>
+  </fieldset>
   <fieldset class="action">
-    <input type="hidden" name="stage" value="[% whole.stage %]"/>
-    <input type="hidden" name="method" value="[% whole.method %]"/>
-    <input type="hidden" name="op" value="[% whole.method %]"/>
-    <label for="search">Search string:</label>
-    <input type="text" name="search" value="" />
-    <label for="borrowernumber">Borrower number:</label>
-    <input type="text" name="borrowernumber" value="" />
-    <label for="branchcode">Pickup branch:</label>
-    <select id="branchcode" name="branchcode">
-      <option value="" />
-      [% FOREACH branch IN branches %]
-      <option value="[% branch.branchcode %]">
-        [% branch.branchname %]
-      </option>
-      [% END %]
-    </select>
-    <label for="medium">Request type:</label>
-    <select id="medium" name="medium">
-      <option value="" />
-      [% FOREACH medium IN media %]
-      <option value="[% medium %]">[% medium %]</option>
-      [% END %]
-    </select>
     <input type="submit" value="Search"/>
     <a class="cancel" href="/cgi-bin/koha/ill/ill-requests.pl">Cancel</a>
   </fieldset>
