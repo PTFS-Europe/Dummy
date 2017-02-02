@@ -191,7 +191,7 @@ sub create {
             message => '',
             method  => 'create',
             stage   => 'search_form',
-            value   => {},
+            value   => $params,
         };
     } elsif ( $stage eq 'search_form' ) {
 	# Received search query in 'other'; perform search...
@@ -209,6 +209,7 @@ sub create {
                 borrowernumber => $params->{other}->{borrowernumber},
                 branchcode     => $params->{other}->{branchcode},
                 medium         => $params->{other}->{medium},
+		backend        => $params->{other}->{backend},
                 candidates     => $self->_data_store,
             }
         };
@@ -225,6 +226,7 @@ sub create {
         $request->branch_id($params->{other}->{branchcode});
         $request->medium($params->{other}->{medium});
         $request->status('NEW');
+	$request->backend($params->{other}->{backend});
         $request->placed(DateTime->now);
         $request->updated(DateTime->now);
         $request->store;

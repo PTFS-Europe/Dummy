@@ -14,6 +14,8 @@
   <input type="hidden" name="stage" value="[% whole.stage %]"/>
   <input type="hidden" name="method" value="[% whole.method %]"/>
   <input type="hidden" name="op" value="[% whole.method %]"/>
+  <input name="backend" id="method"
+         value="[% whole.value.other.backend %]" type="hidden"/>
   <fieldset class="rows">
     <ol>
       <li>
@@ -72,8 +74,10 @@
       <td>[% candidate.id %]</td>
       <td>[% candidate.title %]</td>
       <td>[% candidate.author %]</td>
-      [% target = "/cgi-bin/koha/ill/ill-requests.pl?method=" _ whole.method
+      [% target = "/cgi-bin/koha/ill/ill-requests.pl"
+                  _ "?method=" _ whole.method
                   _ "&stage=" _ whole.stage
+                  _ "&backend=" _ whole.value.backend
                   _ "&borrowernumber=" _ whole.value.borrowernumber
                   _ "&branchcode=" _ whole.value.branchcode
                   _ "&medium=" _ whole.value.medium
