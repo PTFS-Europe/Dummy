@@ -37,7 +37,6 @@ We will be providing the Abstract interface which requires we implement the
 following methods:
 - create        -> initial placement of the request for an ILL order
 - confirm       -> confirm placement of the ILL order
-- list          -> list all ILL Requests currently placed with the backend
 - renew         -> request a currently borrowed ILL be renewed in the backend
 - update_status -> ILL module update hook: custom actions on status update
 - cancel        -> request an already 'confirm'ed ILL order be cancelled
@@ -70,7 +69,7 @@ Each of the above methods should return a hashref of the following format:
         # ^------- Message, possibly to be displayed
         #          Normally messages are derived from status in INCLUDE.
         #          But can be used to pass API messages to the INCLUDE.
-        method  => 'list',
+        method  => 'status',
         # ^------- Name of the current method invoked.
         #          Used to load the appropriate INCLUDE.
         stage   => 'commit',
@@ -310,68 +309,6 @@ sub confirm {
         next     => 'illview',
         value    => $value,
     };
-}
-
-=head3 list
-
-  my $response = $backend->list({
-      request    => $requestdetails,
-      other      => $other,
-  };
-
-Attempt to get a list of the currently registered requests with the backend.
-
-Parameters are optional for this request.  A backend may be supplied with
-details of a specific request (or a group of requests in $other), but equally
-no parameters might be provided at all.
-
-Normally no parameters will be provided in the 'create' stage.  After this,
-parameters may be provided using templates.
-
-=cut
-
-sub list {
-    # -> list all ILL Requests currently placed with the backend
-    #    (we ignore all params provided)
-    my ( $self, $params ) = @_;
-    my $stage = $params->{other}->{stage};
-    if ( !$stage || $stage eq 'init' ) {
-        return {
-            error   => 0,
-            status  => '',
-            message => '',
-            method  => 'list',
-            stage   => 'list',
-            value   => {
-                1 => {
-                    id     => 1234,
-                    title  => "Ordering ILLs using Koha",
-                    author => "A.N. Other",
-                    status => "On order",
-                    cost   => "30 GBP",
-                },
-            },
-        };
-    } elsif ( $stage eq 'list' ) {
-        return {
-            error   => 0,
-            status  => '',
-            message => '',
-            method  => 'list',
-            stage   => 'commit',
-            value   => {},
-        };
-    } else {
-        # Invalid stage, return error.
-        return {
-            error   => 1,
-            status  => 'unknown_stage',
-            message => '',
-            method  => 'create',
-            stage   => $params->{stage},
-            value   => {},
-        };
-    }
 }
 
 =head3 renew
