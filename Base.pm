@@ -113,6 +113,10 @@ sub new {
     return $self;
 }
 
+sub name {
+    return "Dummy";
+}
+
 =head3 _data_store
 
   my $request = $self->_data_store($id);
