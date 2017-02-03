@@ -222,8 +222,8 @@ sub create {
 
         # ...Populate Illrequest
         my $request = $params->{request};
-        $request->borrower_id($params->{other}->{borrowernumber});
-        $request->branch_id($params->{other}->{branchcode});
+        $request->borrowernumber($params->{other}->{borrowernumber});
+        $request->branchcode($params->{other}->{branchcode});
         $request->medium($params->{other}->{medium});
         $request->status('NEW');
 	$request->backend($params->{other}->{backend});
