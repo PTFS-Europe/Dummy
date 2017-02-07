@@ -85,8 +85,8 @@
     </fieldset>
 
     [% commitlink = here_link _ "?method=" _ whole.method
-    _ "&stage=" _ whole.stage
-    _ "&illrequest_id=" _ request.illrequest_id %]
+    _ "&amp;stage=" _ whole.stage
+    _ "&amp;illrequest_id=" _ request.illrequest_id %]
     <p>
         <a href="[% commitlink %]" title="Return to overview.">Back to overview</a>
     </p>

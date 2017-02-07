@@ -35,7 +35,7 @@
         </tbody>
     </table>
 
-[% commitlink = here_link _ "?method=" _ whole.method "&stage=" _ whole.stage %]
+[% commitlink = here_link _ "?method=" _ whole.method "&amp;stage=" _ whole.stage %]
 <p>
     <a href="[% commitlink %]" title="Return to overview.">Back to overview</a>
 </p>

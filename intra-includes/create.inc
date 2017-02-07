@@ -75,12 +75,12 @@
                         <td>[% candidate.author %]</td>
                         [% target = "/cgi-bin/koha/ill/ill-requests.pl"
                         _ "?method=" _ whole.method
-                        _ "&stage=" _ whole.stage
-                        _ "&backend=" _ whole.value.backend
-                        _ "&borrowernumber=" _ whole.value.borrowernumber
-                        _ "&branchcode=" _ whole.value.branchcode
-                        _ "&medium=" _ whole.value.medium
-                        _ "&id=" _ candidate.id %]
+                        _ "&amp;stage=" _ whole.stage
+                        _ "&amp;backend=" _ whole.value.backend
+                        _ "&amp;borrowernumber=" _ whole.value.borrowernumber
+                        _ "&amp;branchcode=" _ whole.value.branchcode
+                        _ "&amp;medium=" _ whole.value.medium
+                        _ "&amp;id=" _ candidate.id %]
                         <td><a href="[% target %]">Request this request</a></td>
                     </tr>
                 [% END %]
