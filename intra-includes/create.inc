@@ -81,7 +81,9 @@
                         _ "&amp;branchcode=" _ whole.value.branchcode
                         _ "&amp;medium=" _ whole.value.medium
                         _ "&amp;id=" _ candidate.id %]
-                        <td><a href="[% target %]">Request this request</a></td>
+                        <td>
+                            <a class="btn btn-sm btn-default" href="[% target %]">Request this item</a>
+                        </td>
                     </tr>
                 [% END %]
             </tbody>
