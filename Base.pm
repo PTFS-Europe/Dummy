@@ -116,6 +116,24 @@ sub name {
     return "Dummy";
 }
 
+=head3 metadata
+
+Return a hashref containing canonical values from the key/value
+illrequestattributes store.
+
+=cut
+
+sub metadata {
+    my ( $self, $request ) = @_;
+    my $attrs = $request->illrequestattributes;
+    return {
+        ID     => $attrs->find({ type => 'id' })->value,
+        Title  => $attrs->find({ type => 'title' })->value,
+        Author => $attrs->find({ type => 'author' })->value,
+        Status => $attrs->find({ type => 'status' })->value,
+    }
+}
+
 =head3 _data_store
 
   my $request = $self->_data_store($id);
