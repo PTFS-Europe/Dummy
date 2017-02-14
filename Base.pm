@@ -150,11 +150,13 @@ sub _data_store {
             id     => 1234,
             title  => "Ordering ILLs using Koha",
             author => "A.N. Other",
+            status => "New",
         },
         5678 => {
             id     => 5678,
             title  => "Interlibrary loans in Koha",
             author => "A.N. Other",
+            status => "New",
         },
     };
     # ID search
