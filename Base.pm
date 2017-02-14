@@ -312,7 +312,7 @@ sub confirm {
     # No-op for Dummy
 
     # ...parse response...
-    $attributes->find_or_create({ type => "status", value => "On order" });
+    $attributes->find({ type => "status" })->value('On order')->store;
     my $request = $params->{request};
     $request->cost("30 GBP");
     $request->orderid($value->{id});
@@ -455,7 +455,7 @@ sub cancel {
             1, 'unknown_request', 'Cannot cancel an unknown request.'
         );
     } else {
-        $attributes->find({ type => "status" })->delete;
+        $attributes->find({ type => "status" })->value('Reverted')->store;
         $params->{request}->status("REQREV");
         $params->{request}->cost(undef);
         $params->{request}->orderid(undef);
