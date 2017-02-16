@@ -20,6 +20,7 @@ package Koha::Illbackends::Dummy::Base;
 use Modern::Perl;
 use DateTime;
 use Koha::Illrequestattribute;
+use Koha::Patrons;
 
 =head1 NAME
 
@@ -240,9 +241,20 @@ sub create {
         # -> select from backend...
         my $request_details = $self->_data_store($id);
 
+        # Establish borrower
+        my $brwnum;
+        if ( $params->{other}->{cardnumber} ) {
+            # OPAC request
+            my $brw = Koha::Patrons->find({
+                cardnumber => $params->{other}->{cardnumber}
+            });
+            $brwnum = $brw->borrowernumber;
+        } else {
+            $brwnum = $params->{other}->{borrowernumber};
+        }
         # ...Populate Illrequest
         my $request = $params->{request};
-        $request->borrowernumber($params->{other}->{borrowernumber});
+        $request->borrowernumber($brwnum);
         $request->branchcode($params->{other}->{branchcode});
         $request->medium($params->{other}->{medium});
         $request->status('NEW');

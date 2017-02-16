@@ -69,7 +69,7 @@
                         <td>[% candidate.title %]</td>
                         <td>[% candidate.author %]</td>
                         [% target = "/cgi-bin/koha/opac-illrequests.pl"
-                        _ "?op=" _ whole.method
+                        _ "?method=" _ whole.method
                         _ "&amp;stage=" _ whole.stage
                         _ "&amp;backend=" _ whole.value.backend
                         _ "&amp;branchcode=" _ whole.value.branchcode
