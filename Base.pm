@@ -386,54 +386,7 @@ sub renew {
         method  => 'renew',
         stage   => 'commit',
         value   => $value,
-    };
-}
-
-=head3 update_status
-
-  my $response = $backend->update_status({
-      request    => $requestdetails,
-      other      => $other,
-  });
-
-Our Illmodule is handling a request to update the status of an Illrequest.  As
-part of this we give the backend an opportunity to perform arbitrary actions
-on update to a new status.
-
-We will provide $request.  This will be supplied at all times through
-Illrequest.  $other will contain entries for the old status and the new
-status, as well as other information provided from templates.
-
-$old_status, $new_status.
-
-=cut
-
-sub update_status {
-    # -> ILL module update hook: custom actions on status update
-    my ( $self, $params ) = @_;
-    # Turn Illrequestattributes into a plain hashref
-    my $value = {};
-    my $attributes = $params->{request}->illrequestattributes;
-    foreach my $attr (@{$attributes->as_list}) {
-        $value->{$attr->type} = $attr->value;
-    };
-    # Submit request to backend, parse response...
-    my ( $error, $status, $message ) = (0, '', '');
-    my $old = $params->{other}->{old_status};
-    my $new = $params->{other}->{new_status};
-    if ( !$new || $new eq 'ERR' ) {
-        ( $error, $status, $message ) = (
-            1, 'failed_update_hook',
-            'Fake reason for failing to perform update operation.'
-        );
-    }
-    return {
-        error   => $error,
-        status  => $status,
-        message => $message,
-        method  => 'update_status',
-        stage   => 'commit',
-        value   => $value,
+        next    => 'illview',
     };
 }
 
@@ -480,6 +433,7 @@ sub cancel {
         method  => 'cancel',
         stage   => 'commit',
         value   => $value,
+        next    => 'illview',
     };
 }
 
