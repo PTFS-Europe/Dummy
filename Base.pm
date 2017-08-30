@@ -135,6 +135,24 @@ sub metadata {
     }
 }
 
+=head3 capabilities
+
+    $capability = $backend->capabilities($name);
+
+Return the sub implementing a capability selected by NAME, or 0 if that
+capability is not implemented.
+
+=cut
+
+sub capabilities {
+    my ( $self, $name ) = @_;
+    my $capabilities = {
+        # The unmediated operation is just invoking confirm for Dummy.
+        unmediated_ill => sub { $self->confirm(@_); }
+    };
+    return $capabilities->{$name};
+}
+
 =head3 _data_store
 
   my $request = $self->_data_store($id);
